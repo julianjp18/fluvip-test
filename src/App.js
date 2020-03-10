@@ -4,29 +4,36 @@ import './styles/bootstrap.css';
 import './App.css';
 import Pets from './components/Pets';
 import Users from './components/Users';
+import NewUser from './components/NewUser';
+import NewPet from './components/NewPet';
+
 
 const homeOptions = () => (
   <div className="container">
-    <p>Selecciona alguna de las dos opciones:</p> 
+    <p className="text-center">Selecciona alguna de las dos opciones:</p> 
     <div className="row">
       <div className="col-md-3"></div>
       <div className="col-md-3">
-        <div className="card text-white bg-success mb-3">
-          <h3 className="card-header">Mascotas</h3>
-          <img className="image-card" src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Card image"></img>
-            <div class="card-body">
-              <p class="card-text">Visualiza a todos las mascotas de Fluvip Pet</p>
-            </div>
-        </div>
+        <Link to={'/pets'}>
+          <div className="card text-white bg-success mb-3">
+            <h3 className="card-header text-center">Mascotas</h3>
+            <img className="image-card" src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Pets"></img>
+              <div className="card-body">
+                <p className="card-text">Visualiza a todos las mascotas de Fluvip Pet</p>
+              </div>
+          </div>  
+        </Link>
       </div>
       <div className="col-md-3">
-        <div className="card text-white bg-dark mb-3">
-          <h3 className="card-header">Dueños</h3>
-          <img className="image-card" src="https://images.pexels.com/photos/745045/pexels-photo-745045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Users photo"></img>
-          <div class="card-body">
-            <p class="card-text">Visualiza a todos los dueños de mascotas de Fluvip Pet</p>
+        <Link to={'/users'}>
+          <div className="card text-white bg-dark mb-3">
+            <h3 className="card-header text-center">Dueños</h3>
+            <img className="image-card" src="https://images.pexels.com/photos/745045/pexels-photo-745045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Users"></img>
+            <div className="card-body">
+              <p className="card-text">Visualiza a todos los dueños de mascotas de Fluvip Pet</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
       <div className="col-md-3"></div>
     </div>
@@ -54,12 +61,15 @@ function App() {
           </nav>
           <div className="container">
             <br/>
-            <h2 className="text-center">Fluvip Pet</h2>
+            <h1 className="text-center">Fluvip Pet</h1>
             <br/>
             <Switch>
+            
                 <Route exact path='/' component={ homeOptions } />
                 <Route exact path='/users' component={ Users } />
                 <Route path='/pets' component={ Pets } />
+                <Route path='/newUser' component={ NewUser } />
+                <Route path='/newPet' component={ NewPet } />
             </Switch>
           </div>
       </Router>
