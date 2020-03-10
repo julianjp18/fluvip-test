@@ -76,7 +76,7 @@ class NewUser extends Component {
           this.state.sucessMessage &&
         <div className="alert alert-success text-center">{this.state.sucessMessage}</div>
         }
-        <form onSubmit={this.handleSubmit} method="POST" enctype="multipart/form-data">
+        <form onSubmit={this.handleSubmit} method="POST" encType="multipart/form-data">
             <div class="form-row">
                 <div class="form-group col-md-6">
                 <label for="txt-name">Nombre</label>
@@ -99,7 +99,7 @@ class NewUser extends Component {
         </form>
         <br/>
         <div className="text-center">
-          <Link to={"/"} className="btn btn-info">Volver</Link>
+          <Link to={"/users"} className="btn btn-info">Volver</Link>
         </div>
         <br/>
       </div>

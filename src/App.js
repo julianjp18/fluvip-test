@@ -6,6 +6,9 @@ import Pets from './components/Pets';
 import Users from './components/Users';
 import NewUser from './components/NewUser';
 import NewPet from './components/NewPet';
+import User from './components/User';
+import UserPets from './components/UserPets';
+import Pet from './components/Pet';
 
 
 const homeOptions = () => (
@@ -19,7 +22,7 @@ const homeOptions = () => (
             <h3 className="card-header text-center">Mascotas</h3>
             <img className="image-card" src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Pets"></img>
               <div className="card-body">
-                <p className="card-text">Visualiza a todos las mascotas de Fluvip Pet</p>
+                <p className="card-text">Visualiza a todas las mascotas de Fluvip Pet</p>
               </div>
           </div>  
         </Link>
@@ -70,6 +73,9 @@ function App() {
                 <Route path='/pets' component={ Pets } />
                 <Route path='/newUser' component={ NewUser } />
                 <Route path='/newPet' component={ NewPet } />
+                <Route path='/user' component={ User } />
+                <Route path='/userPets' component={ UserPets } />
+                <Route path='/pet' component={ Pet } />
             </Switch>
           </div>
       </Router>

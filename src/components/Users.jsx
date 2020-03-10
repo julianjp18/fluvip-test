@@ -16,7 +16,7 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3001/getusers`)
+    axios.get(`http://localhost:3001/getusersList`)
       .then(res => {
         const persons = res.data;
         console.log(res)
@@ -36,14 +36,20 @@ class Users extends Component {
             Array.from(this.state.persons).map(function(person,key){
                 return (
                   <div className="card mb-3" key={key}>
-                    <h3 className="card-header">{person.name + " " + person.lastName}</h3>
+                    <h3 className="card-header">{person[1].name + " " + person[1].lastName}</h3>
                     <div className="card-body">
-                      <h5 className="card-title">{person.cellphone}</h5>
-                      <h6 className="card-subtitle text-muted">{person.email}</h6>
+                      <h5 className="card-title">{person[1].cellphone}</h5>
+                      <h6 className="card-subtitle text-muted">{person[1].email}</h6>
                     </div>
                     <div className="card-body">
-                      <a href="#" className="card-link">Actualizar información</a>
-                      <a href="#" className="card-link">Ver mascotas</a>
+                      <Link to={{
+                          pathname: "/user",
+                          state: { uidUser: person[0] }
+                        }} className="card-link">Más información</Link>
+                      <Link to={{
+                          pathname: "/userPets",
+                          state: { uidUser: person[0] }
+                        }} className="card-link">Ver mascotas</Link>
                     </div>
                   </div>
                 )

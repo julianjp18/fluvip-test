@@ -3,9 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import '../styles/bootstrap.css';
-import '../styles/newPet.css';
 
-class NewPet extends Component {
+class Pet extends Component {
   
   constructor(){
     super()
@@ -25,6 +24,26 @@ class NewPet extends Component {
   }
 
   componentDidMount() {
+    
+    console.log(this.props.location.state.uidPet)
+    const formData = new FormData();
+    
+    formData.append('uidPet', this.props.location.state.uidPet);
+
+    axios.post(`http://localhost:3001/getpet`, formData,{ headers:{'Content-Type': 'multipart/form-data', method: 'POST' }})
+    .then(res => {
+        this.setState({
+            name: res.data.name,
+            specie: res.data.specie,
+            race: res.data.race,
+            owner: res.data.owner,
+            typeOfFood: res.data.typeOfFood,
+            deseases: res.data.deseases,
+            cares: res.data.cares
+        })
+        console.log(res)
+    })
+
     axios.get(`http://localhost:3001/getusersList`)
       .then(res => {
         const ownersList = res.data;
@@ -43,37 +62,37 @@ class NewPet extends Component {
 
   onNameChange = event => {
     this.setState({
-        name: document.getElementById('txt-name').value,
+        name: event.target.value,
     });
   };
 
   onRaceChange = event => {
     this.setState({
-        race: document.getElementById('selrace').value,
+        race: event.target.value,
     });
   };
 
   onOwnerChange = event => {
     this.setState({
-        owner: document.getElementById('selowner').value,
+        owner: event.target.value,
     });
   };
 
   onTypeOfFoodChange = event => {
     this.setState({
-        typeOfFood: document.getElementById('txt-food').value,
+        typeOfFood: event.target.value,
     });
   };
 
   onDiseasesChange = event => {
     this.setState({
-        deseases: document.getElementById('txt-deseases').value,
+        deseases: event.target.value,
     });
   };
 
   onCaresChange = event => {
     this.setState({
-        cares: document.getElementById('txt-cares').value,
+        cares: event.target.value,
     });
   };
   
@@ -143,7 +162,7 @@ class NewPet extends Component {
         <form onSubmit={this.handleSubmit} method="POST" encType="multipart/form-data">
             <div className="form-group">
                 <label for="txt-name">Nombre</label>
-                <input type="text" className="form-control" name="txt-name" id="txt-name" placeholder="Nombre mascota" onChange={this.onNameChange} required/>
+                <input type="text" className="form-control" name="txt-name" id="txt-name" placeholder="Nombre mascota" onChange={this.onNameChange} value={this.state.name} required/>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
@@ -156,7 +175,7 @@ class NewPet extends Component {
                 <div className="form-group col-md-6">
                     <label for="txt-last-name">Raza</label>
                     <select className="form-control" onChange={this.onRaceChange} id="selrace" name="selrace">
-                        <option value="ninguno">Selecciona una opción</option>
+                        <option value={this.state.race}>{this.state.race}</option>
                         { this.state.raceslist &&
                              (this.state.raceslist).map(function(race,key){
                                 return (
@@ -184,15 +203,15 @@ class NewPet extends Component {
             </div>
             <div className="form-group">
                 <label for="txt-food">Tipo de comida</label>
-                <input type="text" className="form-control" id="txt-food" name="txt-food" placeholder="Tipos de comida" onChange={this.onTypeOfFoodChange} required  />
+                <input type="text" className="form-control" id="txt-food" name="txt-food" placeholder="Tipos de comida" onChange={this.onTypeOfFoodChange} value={this.state.typeOfFood} required  />
             </div>
             <div className="form-group">
                 <label for="txt-cellphone">Enfermedades o alergias</label>
-                <textarea className="form-control" rows="5" id="txt-deseases" name="txt-deseases" onChange={this.onDiseasesChange}></textarea>
+                <textarea className="form-control" rows="5" id="txt-deseases" name="txt-deseases" onChange={this.onDiseasesChange} value={this.state.deseases}></textarea>
             </div>
             <div className="form-group">
                 <label for="txt-cellphone">Cuidados especiales</label>
-                <textarea className="form-control" rows="5" id="txt-cares" name="txt-cares" onChange={this.onCaresChange} ></textarea>
+                <textarea className="form-control" rows="5" id="txt-cares" name="txt-cares" onChange={this.onCaresChange} value={this.state.cares}></textarea>
                 
             </div>
             <button type="submit" className="btn btn-success">Registrar mascota</button>
@@ -207,4 +226,4 @@ class NewPet extends Component {
   }
 }
 
-export default NewPet;
+export default Pet;
