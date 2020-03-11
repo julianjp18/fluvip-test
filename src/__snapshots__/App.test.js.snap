@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App snapshot renders 1`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg navbar-dark bg-dark"
+  >
+    <a
+      className="navbar-brand"
+      href="/"
+      onClick={[Function]}
+    >
+      Fluvip Pet
+    </a>
+    <div
+      className="collapse navbar-collapse"
+      id="navbarSupportedContent"
+    >
+      <ul
+        className="navbar-nav mr-auto"
+      >
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/"
+            onClick={[Function]}
+          >
+            Inicio
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/users"
+            onClick={[Function]}
+          >
+            Dueños
+          </a>
+        </li>
+        <li
+          className="nav-item"
+        >
+          <a
+            className="nav-link"
+            href="/pets"
+            onClick={[Function]}
+          >
+            Mascotas
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>,
+  <div
+    className="container"
+  >
+    <br />
+    <h1
+      className="text-center"
+    >
+      Fluvip Pet
+    </h1>
+    <br />
+    <div
+      className="container"
+    >
+      <p
+        className="text-center"
+      >
+        Selecciona alguna de las dos opciones:
+      </p>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-3"
+        />
+        <div
+          className="col-md-3"
+        >
+          <a
+            href="/pets"
+            onClick={[Function]}
+          >
+            <div
+              className="card text-white bg-success mb-3"
+            >
+              <h3
+                className="card-header text-center"
+              >
+                Mascotas
+              </h3>
+              <img
+                alt="Pets"
+                className="image-card"
+                src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="card-text"
+                >
+                  Visualiza a todas las mascotas de Fluvip Pet
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div
+          className="col-md-3"
+        >
+          <a
+            href="/users"
+            onClick={[Function]}
+          >
+            <div
+              className="card text-white bg-dark mb-3"
+            >
+              <h3
+                className="card-header text-center"
+              >
+                Dueños
+              </h3>
+              <img
+                alt="Users"
+                className="image-card"
+                src="https://images.pexels.com/photos/745045/pexels-photo-745045.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              />
+              <div
+                className="card-body"
+              >
+                <p
+                  className="card-text"
+                >
+                  Visualiza a todos los dueños de mascotas de Fluvip Pet
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div
+          className="col-md-3"
+        />
+      </div>
+    </div>
+  </div>,
+]
+`;

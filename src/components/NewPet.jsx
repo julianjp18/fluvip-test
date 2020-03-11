@@ -118,7 +118,6 @@ class NewPet extends Component {
 
 
     axios.post(`http://localhost:3001/addpet`, formData,{ headers:{'Content-Type': 'multipart/form-data', method: 'POST' }}).then(res => {
-        console.log('yes',res)
         if(res.data === 'OK'){
           this.sucessMessage('Se agregó una nueva mascota correctamente')
         }
@@ -142,19 +141,19 @@ class NewPet extends Component {
         }
         <form onSubmit={this.handleSubmit} method="POST" encType="multipart/form-data">
             <div className="form-group">
-                <label for="txt-name">Nombre</label>
+                <label htmlFor="txt-name">Nombre</label>
                 <input type="text" className="form-control" name="txt-name" id="txt-name" placeholder="Nombre mascota" onChange={this.onNameChange} required/>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
-                    <label for="txt-name">Especie</label>
+                    <label htmlFor="txt-name">Especie</label>
                     <br/>  
                     <label className="radio-inline"><input type="radio" name="optspecie" id="optspecie1" value="perro" onChange={this.onSpecieDogChange} />   Perro</label>
                     <label className="radio-inline"><input type="radio" name="optspecie" id="optspecie2" value="gato" onChange={this.onSpecieCatChange} />   Gato</label>
                     <label className="radio-inline"><input type="radio" name="optspecie" id="optspecie3" value="otro" onChange={this.onSpecieOtherChange} />   Otro</label>
                 </div>
                 <div className="form-group col-md-6">
-                    <label for="txt-last-name">Raza</label>
+                    <label htmlFor="txt-last-name">Raza</label>
                     <select className="form-control" onChange={this.onRaceChange} id="selrace" name="selrace">
                         <option value="ninguno">Selecciona una opción</option>
                         { this.state.raceslist &&
@@ -169,7 +168,7 @@ class NewPet extends Component {
                 </div>
             </div>
             <div className="form-group">
-                <label for="txt-cellphone">Dueño</label>
+                <label htmlFor="txt-cellphone">Dueño</label>
                 <select className="form-control" onChange={this.onOwnerChange} id="selowner" name="selowner" required>
                     <option value="ninguno">Selecciona una opción</option>
                     { this.state.ownersList &&
@@ -183,15 +182,15 @@ class NewPet extends Component {
                 </select>
             </div>
             <div className="form-group">
-                <label for="txt-food">Tipo de comida</label>
+                <label htmlFor="txt-food">Tipo de comida</label>
                 <input type="text" className="form-control" id="txt-food" name="txt-food" placeholder="Tipos de comida" onChange={this.onTypeOfFoodChange} required  />
             </div>
             <div className="form-group">
-                <label for="txt-cellphone">Enfermedades o alergias</label>
+                <label htmlFor="txt-cellphone">Enfermedades o alergias</label>
                 <textarea className="form-control" rows="5" id="txt-deseases" name="txt-deseases" onChange={this.onDiseasesChange}></textarea>
             </div>
             <div className="form-group">
-                <label for="txt-cellphone">Cuidados especiales</label>
+                <label htmlFor="txt-cellphone">Cuidados especiales</label>
                 <textarea className="form-control" rows="5" id="txt-cares" name="txt-cares" onChange={this.onCaresChange} ></textarea>
                 
             </div>
