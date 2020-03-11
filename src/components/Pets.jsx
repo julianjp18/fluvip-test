@@ -18,9 +18,9 @@ class Pets extends Component{
     axios.get(`http://localhost:3001/getpets`)
       .then(res => {
         const pets = res.data;
-        console.log(res)
         this.setState({ pets });
       })
+
   }
   
   render(){
@@ -35,13 +35,16 @@ class Pets extends Component{
             Array.from(this.state.pets).map(function(pet,key){
                 return (
                   <div className="card mb-3" key={key}>
-                    <h3 className="card-header">{pet.name + " - " + pet.race}</h3>
+                    <h3 className="card-header">{pet[1].name + " - " + pet[1].race}</h3>
                     <div className="card-body">
-                      <h5 className="card-title">{pet.specie}</h5>
-                      <h6 className="card-subtitle text-muted">{" Dueño: " + pet.owner}</h6>
+                      <h5 className="card-title">{pet[1].specie}</h5>
+                      <h6 className="card-subtitle text-muted">{" Enfermedades: " + pet[1].deseases}</h6>
                     </div>
                     <div className="card-body">
-                      <a href="#" className="card-link">Más información</a>
+                    <Link to={{
+                          pathname: "/pet",
+                          state: { uidPet: pet[0] }
+                        }} className="card-link">Ver máscota</Link>
                     </div>
                   </div>
                 )

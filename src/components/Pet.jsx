@@ -18,14 +18,16 @@ class Pet extends Component {
       deseases: '',
       cares: '',
       ownersList: [],
+      ownerName: '',
       raceslist: [],
-      sucessMessage: ''
+      sucessMessage: '',
+      btnUpdateText: 'Habilitar actualizar información',
+      btnOnSubmitText: 'Presiona el botón de arriba'
     }
   }
 
   componentDidMount() {
     
-    console.log(this.props.location.state.uidPet)
     const formData = new FormData();
     
     formData.append('uidPet', this.props.location.state.uidPet);
@@ -41,7 +43,29 @@ class Pet extends Component {
             deseases: res.data.deseases,
             cares: res.data.cares
         })
-        console.log(res)
+
+        const formData2 = new FormData();
+        formData2.append('uidUser', res.data.owner);
+
+        axios.post(`http://localhost:3001/getuser`, formData2,{ headers:{'Content-Type': 'multipart/form-data', method: 'POST' }})
+        .then(res => {
+          
+          this.setState({ ownerName: res.data.name + ' ' + res.data.lastName });
+        })
+
+        if(this.state.specie.toLowerCase() === 'perro'){
+          document.getElementById('optspecie1').setAttribute('checked','true')
+          document.getElementById('selrace').setAttribute('disabled','true')
+        }
+        if(this.state.specie.toLowerCase() === 'gato'){
+          document.getElementById('optspecie2').setAttribute('checked','true')
+        }
+        if(this.state.specie.toLowerCase() === 'otro'){
+          document.getElementById('optspecie3').setAttribute('checked','true')
+        }
+        document.getElementById('optspecie1').setAttribute('disabled','true')
+        document.getElementById('optspecie2').setAttribute('disabled','true')
+        document.getElementById('optspecie3').setAttribute('disabled','true')
     })
 
     axios.get(`http://localhost:3001/getusersList`)
@@ -50,7 +74,9 @@ class Pet extends Component {
         this.setState({ ownersList });
       })
     this.getRacesDogList()
+    
     document.getElementById('selrace').removeAttribute('disabled');
+    
   }
 
   getRacesDogList(){
@@ -121,6 +147,44 @@ class Pet extends Component {
     document.getElementById('selrace').disabled = 'true';
   };
 
+  onClickOnSubmit = event => {
+    if(this.state.btnUpdateText === 'Habilitar actualizar información'){
+        document.getElementById('txt-name').removeAttribute('disabled')
+        document.getElementById('selrace').removeAttribute('disabled')
+        document.getElementById('selowner').removeAttribute('disabled')
+        document.getElementById('txt-food').removeAttribute('disabled')
+        document.getElementById('txt-deseases').removeAttribute('disabled')
+        document.getElementById('txt-cares').removeAttribute('disabled')
+        document.getElementById('btn-submit').removeAttribute('disabled')
+        document.getElementById('optspecie1').removeAttribute('disabled')
+        document.getElementById('optspecie2').removeAttribute('disabled')
+        document.getElementById('optspecie3').removeAttribute('disabled')
+
+        this.setState({
+            btnUpdateText: 'Ocultar actualizar información',
+            btnOnSubmitText: 'Actualizar información'
+        });
+    }else{
+        document.getElementById('txt-name').setAttribute('disabled', 'true')
+        document.getElementById('selrace').setAttribute('disabled', 'true')
+        document.getElementById('selowner').setAttribute('disabled', 'true')
+        document.getElementById('txt-food').setAttribute('disabled', 'true')
+        document.getElementById('txt-deseases').setAttribute('disabled', 'true')
+        document.getElementById('txt-cares').setAttribute('disabled', 'true')
+        document.getElementById('btn-submit').setAttribute('disabled', 'true')
+
+        document.getElementById('optspecie1').setAttribute('disabled','true')
+        document.getElementById('optspecie2').setAttribute('disabled','true')
+        document.getElementById('optspecie3').setAttribute('disabled','true')
+
+        this.setState({
+            btnUpdateText: 'Habilitar actualizar información',
+            btnOnSubmitText: 'Presiona el botón de arriba'
+        });
+    }
+    
+  };
+
   handleSubmit = event => {
 
     event.preventDefault();
@@ -134,12 +198,13 @@ class Pet extends Component {
     formData.append('typeOfFood', this.state.typeOfFood);
     formData.append('deseases', this.state.deseases);
     formData.append('cares', this.state.cares);
+    formData.append('uidPet', this.props.location.state.uidPet);
 
 
-    axios.post(`http://localhost:3001/addpet`, formData,{ headers:{'Content-Type': 'multipart/form-data', method: 'POST' }}).then(res => {
+    axios.post(`http://localhost:3001/updatepet`, formData,{ headers:{'Content-Type': 'multipart/form-data', method: 'POST' }}).then(res => {
         console.log('yes',res)
         if(res.data === 'OK'){
-          this.sucessMessage('Se agregó una nueva mascota correctamente')
+          this.sucessMessage('Se actualizó la mascota correctamente')
         }
       }).catch(err => {
         console.log(err)
@@ -154,7 +219,11 @@ class Pet extends Component {
   render(){
     return (
       <div>
-        <h2>Nueva mascota</h2>
+        <h2>Visualizar mascota de { this.state.ownerName }</h2>
+        <div className="text-center">
+            <button onClick={this.onClickOnSubmit} class="btn btn-warning">{this.state.btnUpdateText}</button>
+        </div>
+        <br />
         {
           this.state.sucessMessage &&
         <div className="alert alert-success text-center">{this.state.sucessMessage}</div>
@@ -162,7 +231,7 @@ class Pet extends Component {
         <form onSubmit={this.handleSubmit} method="POST" encType="multipart/form-data">
             <div className="form-group">
                 <label for="txt-name">Nombre</label>
-                <input type="text" className="form-control" name="txt-name" id="txt-name" placeholder="Nombre mascota" onChange={this.onNameChange} value={this.state.name} required/>
+                <input type="text" className="form-control" name="txt-name" id="txt-name" placeholder="Nombre mascota" onChange={this.onNameChange} value={this.state.name} disabled required/>
             </div>
             <div className="form-row">
                 <div className="form-group col-md-6">
@@ -173,8 +242,8 @@ class Pet extends Component {
                     <label className="radio-inline"><input type="radio" name="optspecie" id="optspecie3" value="otro" onChange={this.onSpecieOtherChange} />   Otro</label>
                 </div>
                 <div className="form-group col-md-6">
-                    <label for="txt-last-name">Raza</label>
-                    <select className="form-control" onChange={this.onRaceChange} id="selrace" name="selrace">
+                    <label for="selrace">Raza</label>
+                    <select className="form-control" onChange={this.onRaceChange} id="selrace" name="selrace" disabled>
                         <option value={this.state.race}>{this.state.race}</option>
                         { this.state.raceslist &&
                              (this.state.raceslist).map(function(race,key){
@@ -189,8 +258,8 @@ class Pet extends Component {
             </div>
             <div className="form-group">
                 <label for="txt-cellphone">Dueño</label>
-                <select className="form-control" onChange={this.onOwnerChange} id="selowner" name="selowner" required>
-                    <option value="ninguno">Selecciona una opción</option>
+                <select className="form-control" onChange={this.onOwnerChange} id="selowner" name="selowner" required disabled>
+                    <option value={this.state.owner}>{this.state.ownerName}</option>
                     { this.state.ownersList &&
                             (this.state.ownersList).map(function(owner,key){
                                 return (
@@ -203,18 +272,18 @@ class Pet extends Component {
             </div>
             <div className="form-group">
                 <label for="txt-food">Tipo de comida</label>
-                <input type="text" className="form-control" id="txt-food" name="txt-food" placeholder="Tipos de comida" onChange={this.onTypeOfFoodChange} value={this.state.typeOfFood} required  />
+                <input type="text" className="form-control" id="txt-food" name="txt-food" placeholder="Tipos de comida" onChange={this.onTypeOfFoodChange} value={this.state.typeOfFood} required disabled />
             </div>
             <div className="form-group">
                 <label for="txt-cellphone">Enfermedades o alergias</label>
-                <textarea className="form-control" rows="5" id="txt-deseases" name="txt-deseases" onChange={this.onDiseasesChange} value={this.state.deseases}></textarea>
+                <textarea className="form-control" rows="5" id="txt-deseases" name="txt-deseases" onChange={this.onDiseasesChange} value={this.state.deseases} disabled></textarea>
             </div>
             <div className="form-group">
                 <label for="txt-cellphone">Cuidados especiales</label>
-                <textarea className="form-control" rows="5" id="txt-cares" name="txt-cares" onChange={this.onCaresChange} value={this.state.cares}></textarea>
+                <textarea className="form-control" rows="5" id="txt-cares" name="txt-cares" onChange={this.onCaresChange} value={this.state.cares} disabled></textarea>
                 
             </div>
-            <button type="submit" className="btn btn-success">Registrar mascota</button>
+                  <button type="submit" className="btn btn-success" id="btn-submit">{ this.state.btnOnSubmitText }</button>
         </form>
         <br/>
         <div className="text-center">
